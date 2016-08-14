@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Rootless | A Man and a World</title>
+  <link href='http://fonts.googleapis.com/css?family=Montserrat|Cardo' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAIIjAAA2DgCMYRYAYz8AAABUFwDHnFIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIiVQAAAABENVURMwAABDM1URZmMABDMzMRFmZjAEMzM2ZmEWUEM1VRYWEREVQzNVFhERERVDVTFhERERFUNTMWEREREVQzNRZmYRERVDMzZhYRERFQQzNmEREWYwBDM2ZhERFjAAQzZmEWZjAAAEQ2ZmYzAAAAAEQzMwAAD4HwAA4AcAAMADAACAAQAAgAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAACAAQAAwAMAAOAHAAD4HwAA" rel="icon" type="image/x-icon" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.js"></script>
+
+</head>
+
+<body ng-controller="MainController">
+
+  <header class="main_h">
+
+      <div class="row">
+          <a class="logo" href="#">ROOTLESS</a>
+
+          <div class="mobile-toggle">
+              <span></span>
+              <span></span>
+              <span></span>
+          </div>
+
+          <nav>
+              <ul>
+                  <li><a href="travels">Travels</a></li>
+                  <li><a href="advice">Advice</a></li>
+                  <li><a href="apps">Apps</a></li>
+              </ul>
+          </nav>
+
+      </div> <!-- / row -->
+
+  </header>
+
+
+
+
+
+  <div ng-view autoscroll="true">
+  </div>
+
+
+  <script src="./js/bLazy.js"></script>
+  <script>
+  var bLazy = new Blazy({
+     breakpoints: [{
+   width: 420 // Max-width
+       , src: 'data-src-small'
+}]
+   , success: function(element){
+   setTimeout(function(){
+ // We want to remove the loader gif now.
+ // First we find the parent container
+ // then we remove the "loading" class which holds the loader image
+ var parent = element.parentNode;
+ parent.className = parent.className.replace(/\bloading\b/,'');
+   }, 200);
+     }
+});
+
+
+// Sticky Header
+$(window).scroll(function() {
+
+    if ($(window).scrollTop() > 100) {
+        $('.main_h').addClass('sticky');
+    } else {
+        $('.main_h').removeClass('sticky');
+    }
+});
+
+// Mobile Navigation
+$('.mobile-toggle').click(function() {
+    if ($('.main_h').hasClass('open-nav')) {
+        $('.main_h').removeClass('open-nav');
+    } else {
+        $('.main_h').addClass('open-nav');
+    }
+});
+
+$('.main_h li a').click(function() {
+    if ($('.main_h').hasClass('open-nav')) {
+        $('.navigation').removeClass('open-nav');
+        $('.main_h').removeClass('open-nav');
+    }
+});
+
+// navigation scroll lijepo radi materem
+$('nav a').click(function(event) {
+    var id = $(this).attr("href");
+    var offset = 70;
+    var target = $(id).offset().top - offset;
+    $('html, body').animate({
+        scrollTop: target
+    }, 500);
+    event.preventDefault();
+});
+
+
+// CHANGING BACKGROUND MASK ANIMATION
+var colors = new Array(
+  [62,35,255],
+  [60,255,60],
+  [255,35,98],
+  [45,175,230],
+  [255,0,255],
+  [255,128,0]);
+
+var step = 0;
+//color table indices for:
+// current color left
+// next color left
+// current color right
+// next color right
+var colorIndices = [0,1,2,3];
+
+//transition speed
+var gradientSpeed = 0.002;
+
+function updateGradient()
+{
+
+  if ( $===undefined ) return;
+
+var c0_0 = colors[colorIndices[0]];
+var c0_1 = colors[colorIndices[1]];
+var c1_0 = colors[colorIndices[2]];
+var c1_1 = colors[colorIndices[3]];
+
+var istep = 1 - step;
+var r1 = Math.round(istep * c0_0[0] + step * c0_1[0]);
+var g1 = Math.round(istep * c0_0[1] + step * c0_1[1]);
+var b1 = Math.round(istep * c0_0[2] + step * c0_1[2]);
+var color1 = "rgb("+r1+","+g1+","+b1+")";
+
+var r2 = Math.round(istep * c1_0[0] + step * c1_1[0]);
+var g2 = Math.round(istep * c1_0[1] + step * c1_1[1]);
+var b2 = Math.round(istep * c1_0[2] + step * c1_1[2]);
+var color2 = "rgb("+r2+","+g2+","+b2+")";
+
+ $('#gradient').css({
+   border: "-webkit-gradient(linear, left top, right top, from("+color1+"), to("+color2+"))"}).css({
+    border: "-moz-linear-gradient(left, "+color1+" 0%, "+color2+" 100%)"});
+
+  step += gradientSpeed;
+  if ( step >= 1 )
+  {
+    step %= 1;
+    colorIndices[0] = colorIndices[1];
+    colorIndices[2] = colorIndices[3];
+
+    //pick two new target color indices
+    //do not pick the same as the current one
+    colorIndices[1] = ( colorIndices[1] + Math.floor( 1 + Math.random() * (colors.length - 1))) % colors.length;
+    colorIndices[3] = ( colorIndices[3] + Math.floor( 1 + Math.random() * (colors.length - 1))) % colors.length;
+
+  }
+}
+
+setInterval(updateGradient,10);
+
+
+  </script>
+  <script src="./js/app.js"></script>
+  <script src="./js/controllers.js"></script>
+  <script src="./js/directives.js"></script>
+  <script src="./js/services.js"></script>
+  <script src="./js/factories.js"></script>
+  <script src="./js/filters.js"></script>
+  <script src="./js/routes.js"></script>
+
+
+</body>
+
+</html>
