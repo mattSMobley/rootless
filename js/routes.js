@@ -4,6 +4,12 @@ angular.module("app")
       .when('/', {
         templateUrl: 'views/main.html'
       })
+      .when('/travels', {
+        templateUrl: 'views/travels.html'
+      })
+      .when('/apps', {
+        templateUrl: 'views/apps.html'
+      })
       .when('/faves', {
         templateUrl: 'views/faves.html'
       })
