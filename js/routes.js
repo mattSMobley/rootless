@@ -85,8 +85,8 @@ angular.module("app")
       .when('/portugal/porto', {
         templateUrl: 'views/portugal/porto.html'
       })
-      .when('/portugal/lisbonArea', {
-        templateUrl: 'views/portugal/lisbonArea.html'
+      .when('/portugal/lisbon', {
+        templateUrl: 'views/portugal/lisbon.html'
       })
       .when('/belgium', {
         templateUrl: 'views/belgium.html'
