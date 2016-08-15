@@ -7,6 +7,9 @@ angular.module("app")
       .when('/travels', {
         templateUrl: 'views/travels.html'
       })
+      .when('/advice', {
+        templateUrl: 'views/advice.html'
+      })
       .when('/apps', {
         templateUrl: 'views/apps.html'
       })
